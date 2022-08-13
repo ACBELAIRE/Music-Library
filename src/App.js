@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react'
+import Gallery from './components/Gallery.jsx'
+import SearchBar from './components/Searchbar.jsx'
+
 
 const App = () => {
     let [search, setSearch] = useState('')
