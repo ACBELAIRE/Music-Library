@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { DataContext } from './context/DataContext.js'
+import { SearchContext } from './context/SearchContext.js'
 import Gallery from './components/Gallery.jsx'
 import SearchBar from './components/Searchbar.jsx'
-import { DataContext } from './context/DataContext.js'
 
 const App = () => {
     let [search, setSearch] = useState('')
     let [message, setMessage] = useState('Search for Music!')
     let [data, setData] = useState([])
+    let searchInput = useRef('')
 
 //define a variable for the url it will need to fetch and then pass that variable within the function
 //add a conditional to prevent the function from running continuously if there is no search term
@@ -37,9 +39,14 @@ const App = () => {
  //ship the data down the the Gallery Component so that it will be able to render in future steps
     return (
         <div className="App">
-            <SearchBar handleSearch={handleSearch} />
+            <SearchContext.Provider value={{
+                    term: searchInput,
+                    handleSearch: handleSearch
+            }}>
+                    <SearchBar/>
+            </SearchContext.Provider>
             {message}
-            <DataContext.Provider value={data} >
+            <DataContext.Provider value={data}>
                 <Gallery />
             </DataContext.Provider>
         </div>
